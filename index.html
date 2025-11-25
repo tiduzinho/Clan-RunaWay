@@ -12,7 +12,6 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            /* Fundo escuro com gradiente sutil */
             background: linear-gradient(135deg, #0f0f0f 0%, #1a0505 100%);
             color: #fff;
             min-height: 100vh;
@@ -28,8 +27,8 @@
             max-width: 600px;
             padding: 40px;
             border-radius: 15px;
-            border: 2px solid #ffd700; /* Borda Dourada */
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); /* Brilho vermelho */
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
         }
 
         .logo-container { text-align: center; }
@@ -92,7 +91,6 @@
             box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
         }
 
-        /* Grid para telas maiores */
         .row { display: flex; gap: 15px; }
         .col { flex: 1; }
 
@@ -227,18 +225,21 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        // CONFIGURAÇÃO REAL DO SUPABASE (Chaves fornecidas)
+        // --- CORREÇÃO AQUI ---
+        // Usamos '_supabase' para não conflitar com a biblioteca 'supabase'
         const supabaseUrl = 'https://qemgbjzabucocczgdjzc.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFlbWdianphYnVjb2NjemdkanpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEzMzI2OTAsImV4cCI6MjA3NjkwODY5MH0.fGvmXWl5oYhRb9SIvqAH8z7ErrF327_acxGl75Yv6Y0';
         
-        // Inicializa o cliente
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Inicializa o cliente com um nome seguro
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         const form = document.getElementById('formClan');
         const btn = document.getElementById('btnEnviar');
 
         form.addEventListener('submit', async (e) => {
+            // Isso impede que a página recarregue
             e.preventDefault();
+            
             btn.innerText = "Enviando...";
             btn.disabled = true;
 
@@ -258,8 +259,8 @@
                 clans_antigos: document.getElementById('clans_antigos').value
             };
 
-            // Envia para a tabela 'membros_clan'
-            const { data, error } = await supabase
+            // Usa a variável corrigida '_supabase'
+            const { data, error } = await _supabase
                 .from('membros_clan')
                 .insert([dados]);
 
